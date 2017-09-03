@@ -1,4 +1,12 @@
 import boto3
+import pynliner
+
+def render_template():
+    f = open("template.html", "r")
+    contents = f.read()
+    f.close()
+
+    return pynliner.fromString(contents)
 
 client = boto3.client(service_name = "ses", region_name = "us-east-1")
 
@@ -18,8 +26,8 @@ message = {
         "Data": "Testing"
     },
     "Body": {
-        "Text": {
-            "Data": "Testing body"
+        "Html": {
+            "Data": render_template()
         }
     }
 }
