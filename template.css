@@ -7,16 +7,9 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-#header, #container {
-    box-sizing: border-box;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 #header {
-    background: #007161;
     text-align: center;
-    padding: 20px;
+    margin: 8px 16px 24px;
 }
 
 #header img {
@@ -34,7 +27,9 @@ body {
 
 #container {
     background: #007161;
-    margin-top: 16px;
+    box-sizing: border-box;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 16px;
 }
 
@@ -49,7 +44,7 @@ body {
 }
 
 #footer {
-    margin: 32px 32px 16px;
+    margin: 24px 16px 8px;
 }
 
 .person {
