@@ -4,7 +4,7 @@ class Email:
 
     def __init__(self, contents):
         lines = contents.split("\n")
-        self.subject = lines[0]
+        self.subject = lines[0].split(": ")[1]
 
         text = ""
 

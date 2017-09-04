@@ -17,7 +17,7 @@ def send_email(client, email, member):
 
     message = {
         "Subject": {
-            "Data": "Testing 1"
+            "Data": email.subject
         },
         "Body": {
             "Html": {
