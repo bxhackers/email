@@ -10,10 +10,12 @@ def get_keys():
 
     return json.loads(contents)
 
-def render_template():
+def render_template(member):
     f = open("template.html", "r")
     html = f.read()
     f.close()
+
+    html = html.replace("{{name}}", member.first).replace("{{content}}", "<p>%s</p>" % member.email)
 
     f = open("template.css", "r")
     css = f.read()
@@ -54,36 +56,40 @@ def request_members():
 
     return members
 
-client = boto3.client(service_name = "ses", region_name = "us-east-1")
+def send_email(client, member):
+    source = "Bronx Science Hackers <jack@bxhackers.club>"
 
-source = "Bronx Science Hackers <jack@bxhackers.club>"
+    destination = {
+        "ToAddresses": [
+            "Jack Cook <jack@bxhackers.club>"
+        ],
+        "BccAddresses": [
+            "%s %s <%s>" % (member.first, member.last, member.email)
+        ]
+    }
 
-destination = {
-    "ToAddresses": [
-        "jack@bxhackers.club"
-    ],
-    "BccAddresses": [
-        "hello@jackcook.nyc"
-    ]
-}
-
-message = {
-    "Subject": {
-        "Data": "Testing"
-    },
-    "Body": {
-        "Html": {
-            "Data": render_template()
+    message = {
+        "Subject": {
+            "Data": "Testing 1"
+        },
+        "Body": {
+            "Html": {
+                "Data": render_template(member)
+            }
         }
     }
-}
 
-result = client.send_email(Source = source, Destination = destination, Message = message)
-status_code = result["ResponseMetadata"]["HTTPStatusCode"]
+    return client.send_email(Source = source, Destination = destination, Message = message)
 
-if status_code == 200:
-    print("Emails sent successfully!")
-else:
-    print("Emails could not be sent.")
+client = boto3.client(service_name = "ses", region_name = "us-east-1")
 
-print(result)
+for member in request_members():
+    result = send_email(client, member)
+
+    status_code = result["ResponseMetadata"]["HTTPStatusCode"]
+
+    if status_code == 200:
+        print("Email to %s was sent successfully!" % member.email)
+    else:
+        print("Email to %s could not be sent." % member.email)
+        print(result)
