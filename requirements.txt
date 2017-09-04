@@ -1,0 +1,3 @@
+boto3==1.4.7
+pynliner==0.8.0
+requests==2.18.4
