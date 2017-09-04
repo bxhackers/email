@@ -1,5 +1,13 @@
 import boto3
+import json
 from pynliner import Pynliner
+
+def get_keys():
+    f = open("keys.json", "r")
+    contents = f.read()
+    f.close()
+
+    return json.loads(contents)
 
 def render_template():
     f = open("template.html", "r")
