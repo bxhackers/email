@@ -1,12 +1,17 @@
 import boto3
-import pynliner
+from pynliner import Pynliner
 
 def render_template():
     f = open("template.html", "r")
-    contents = f.read()
+    html = f.read()
     f.close()
 
-    return pynliner.fromString(contents)
+    f = open("template.css", "r")
+    css = f.read()
+    f.close()
+
+    p = Pynliner().from_string(html).with_cssString(css)
+    return p.run()
 
 client = boto3.client(service_name = "ses", region_name = "us-east-1")
 
