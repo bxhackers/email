@@ -22,7 +22,7 @@ class Member:
 
     def __repr__(self):
         """Returns a string that can be used in a to/cc/bcc field in an email.
-        e.g. Jack Cook <hello@jackcook.nyc>
+        e.g. Jack Cook <jack@bxhackers.club>
 
         Returns:
             The string representing this member.
@@ -46,8 +46,8 @@ def request_members(config):
     # spreadsheet causes no issues, so just pick a bigger number if necessary.
     range_ = "A1:C1000"
 
-    api_key = config.google_api_key
-    spreadsheet_id = config.spreadsheet_id
+    api_key = config.keys.google_api_key
+    spreadsheet_id = config.keys.spreadsheet_id
     values = (spreadsheet_id, range_, api_key)
 
     r = requests.get("https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s?key=%s" % values)

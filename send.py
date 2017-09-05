@@ -3,11 +3,12 @@ import boto3
 
 from src import *
 
-def send_email(client, email, member):
+def send_email(client, config, email, member):
     """Sends an email to someone.
 
     Args:
         client: The boto3 client that will make the request to AWS.
+        config: The current config file model.
         email: The model of the email that should be sent.
         member: The member that this email will be sent to.
 
@@ -15,11 +16,11 @@ def send_email(client, email, member):
         The JSON response of the request that was made to send the email.
     """
 
-    source = "Bronx Science Hackers <jack@bxhackers.club>"
+    source = "%s <%s>" % (config.email.sender_name, config.email.sender_email)
 
     destination = {
         "ToAddresses": [
-            "Jack Cook <jack@bxhackers.club>"
+            "%s <%s>" % (config.email.recipient_name, config.email.recipient_email)
         ],
         "BccAddresses": [
             "%s %s <%s>" % (member.first, member.last, member.email)
@@ -51,7 +52,7 @@ email = load_email(email_name)
 config = load_config()
 
 for member in request_members(config):
-    result = send_email(client, email, member)
+    result = send_email(client, config, email, member)
 
     status_code = result["ResponseMetadata"]["HTTPStatusCode"]
 
