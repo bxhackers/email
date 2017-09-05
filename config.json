@@ -1,4 +1,12 @@
 {
-    "GOOGLE_API_KEY": "",
-    "SPREADSHEET_ID": ""
+    "email": {
+        "recipient_email": "",
+        "recipient_name": "",
+        "sender_email": "",
+        "sender_name": ""
+    },
+    "keys": {
+        "google_api_key": "",
+        "spreadsheet_id": ""
+    }
 }
