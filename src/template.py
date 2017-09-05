@@ -1,6 +1,18 @@
 from pynliner import Pynliner
 
-def render_template(email, member):
+def contains_variables(email):
+    """Checks if an email contains any member variables.
+
+    Args:
+        email: The email to check.
+
+    Returns:
+        True if the email contains any member variables.
+    """
+
+    return "{{first}}" in email.text or "{{last}}" in email.text or "{{email}}" in email.text
+
+def render_template(email, member = None):
     """Renders an email for a club member, using the html/css files from the
     template folder.
 
@@ -21,13 +33,14 @@ def render_template(email, member):
     for line in email.text.split("\n"):
         text += "<p>%s</p>" % line
 
-    # Replace variables with personalized values for each member
-    text = text.replace("{{first}}", member.first).replace("{{last}}", member.last).replace("{{email}}", member.email)
+    if member is not None:
+        # Replace variables with personalized values for each member
+        text = text.replace("{{first}}", member.first).replace("{{last}}", member.last).replace("{{email}}", member.email)
+
     html = html.replace("{{content}}", text)
 
     f = open("./template/template.css", "r")
     css = f.read()
     f.close()
 
-    p = Pynliner().from_string(html).with_cssString(css)
-    return p.run()
+    return Pynliner().from_string(html).with_cssString(css).run()

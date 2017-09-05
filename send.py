@@ -3,29 +3,46 @@ import boto3
 
 from src import *
 
-def send_email(client, config, email, member):
-    """Sends an email to someone.
+def send_email(client, config, email, member = None, recipients = None):
+    """Sends an email to someone. Either member or recipients must not be None.
 
     Args:
         client: The boto3 client that will make the request to AWS.
         config: The current config file model.
         email: The model of the email that should be sent.
         member: The member that this email will be sent to.
+        recipients: An array of email addresses that this email should be sent to.
 
     Returns:
         The JSON response of the request that was made to send the email.
     """
 
-    source = "%s <%s>" % (config.email.sender_name, config.email.sender_email)
+    if member == None and recipients == None:
+        print("Error: either member or recipients must be specified")
+        return
+    elif member != None and recipients != None:
+        print("Error: both member or recipients was specified. only one is needed")
+        return
 
-    destination = {
-        "ToAddresses": [
-            "%s <%s>" % (config.email.recipient_name, config.email.recipient_email)
-        ],
-        "BccAddresses": [
-            "%s %s <%s>" % (member.first, member.last, member.email)
-        ]
-    }
+    source = "%s <%s>" % (config.email.sender_name, config.email.sender_email)
+    destination = {}
+
+    if member is not None:
+        destination = {
+            "ToAddresses": [
+                "%s <%s>" % (config.email.recipient_name, config.email.recipient_email)
+            ],
+            "BccAddresses": [
+                "%s %s <%s>" % (member.first, member.last, member.email)
+            ]
+        }
+    else:
+        destination = {
+            "ToAddresses": [
+                "%s <%s>" % (config.email.recipient_name, config.email.recipient_email)
+            ],
+            "BccAddresses": recipients
+        }
 
     message = {
         "Subject": {
@@ -51,13 +68,28 @@ client = boto3.client(service_name = "ses", region_name = "us-east-1")
 email = load_email(email_name)
 config = load_config()
 
-for member in request_members(config):
-    result = send_email(client, config, email, member)
+if contains_variables(email):
+    for member in request_members(config):
+        result = send_email(client, config, email, member)
 
+        status_code = result["ResponseMetadata"]["HTTPStatusCode"]
+
+        if status_code == 200:
+            print("Email to %s was sent successfully!" % member.email)
+        else:
+            print("Email to %s could not be sent." % member.email)
+            print(result)
+else:
+    recipients = []
+
+    for member in request_members(config):
+        recipients.append(str(member))
+
+    result = send_email(client, config, email, recipients = recipients)
     status_code = result["ResponseMetadata"]["HTTPStatusCode"]
 
     if status_code == 200:
-        print("Email to %s was sent successfully!" % member.email)
+        print("Email was sent out successfully!")
     else:
-        print("Email to %s could not be sent." % member.email)
+        print("Email could not be sent.")
         print(result)

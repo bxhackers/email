@@ -42,6 +42,8 @@ After this last step, you should be all set up to send some emails!
 
 Write out your email, following the format of the `.email` files that already exist. Once you're done writing, place your new file in the `emails` folder. Keep in mind that the line breaks in your file matter, as these determine where your paragraphs will start and end.
 
+While writing your emails, you can use `{{first}}` to indicate that each member's first name should be put there, `{{last}}` to indicate that each member's last name should be put there, and `{{email}}` to indicate that each member's email address should be put there. Using these variables comes with the benefit of making your emails personalized, but however your emails will now take longer to send. This is because each email will now have to be sent individually as opposed to the same email being sent out to everyone.
+
 ### Send your email out to everyone
 
 By now, with everything is in place, you should be able to send your email from the command line. Perform the following command where `filename` is the name of the file that you just created.
