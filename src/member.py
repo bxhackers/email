@@ -30,11 +30,11 @@ class Member:
 
         return "%s %s <%s>" % (self.first, self.last, self.email)
 
-def request_members(keys):
+def request_members(config):
     """Requests all members from the Google Sheet.
 
     Args:
-        keys: The keys file model that was generated from keys.json.
+        config: The config model that was generated from config.json.
 
     Returns:
         An array of all members in the Google Sheet.
@@ -46,8 +46,8 @@ def request_members(keys):
     # spreadsheet causes no issues, so just pick a bigger number if necessary.
     range_ = "A1:C1000"
 
-    api_key = keys.google_api_key
-    spreadsheet_id = keys.spreadsheet_id
+    api_key = config.google_api_key
+    spreadsheet_id = config.spreadsheet_id
     values = (spreadsheet_id, range_, api_key)
 
     r = requests.get("https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s?key=%s" % values)

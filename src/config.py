@@ -1,7 +1,7 @@
 import json
 
-class Keys:
-    """A model representing the keys.json file.
+class Config:
+    """A model representing the config.json file.
 
     Attributes:
         google_api_key: The Google API key used in requests to Google Sheets.
@@ -9,25 +9,25 @@ class Keys:
     """
 
     def __init__(self, contents):
-        """Creates a keys file model from the contents of the keys.json file.
+        """Creates a config model from the contents of the config.json file.
 
         Args:
-            contents: The contents of the keys.json file.
+            contents: The contents of the config.json file.
         """
 
         data = json.loads(contents)
         self.google_api_key = data["GOOGLE_API_KEY"]
         self.spreadsheet_id = data["SPREADSHEET_ID"]
 
-def load_keys():
-    """Loads the keys file model from the keys.json file.
+def load_config():
+    """Loads the config model from the config.json file.
 
     Returns:
-        The keys file model that was retrieved.
+        The config model that was retrieved.
     """
 
-    f = open("keys.json", "r")
+    f = open("config.json", "r")
     contents = f.read()
     f.close()
 
-    return Keys(contents)
+    return Config(contents)

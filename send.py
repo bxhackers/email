@@ -48,9 +48,9 @@ email_name = args.email.replace(".email", "")
 
 client = boto3.client(service_name = "ses", region_name = "us-east-1")
 email = load_email(email_name)
-keys = load_keys()
+config = load_config()
 
-for member in request_members(keys):
+for member in request_members(config):
     result = send_email(client, email, member)
 
     status_code = result["ResponseMetadata"]["HTTPStatusCode"]

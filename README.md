@@ -29,11 +29,11 @@ We read names and email addresses from a Google Sheet, so you'll need to set one
 
 [Here's an example](https://docs.google.com/spreadsheets/d/1luDE6PCo2CCBuQAF51bfig9GACMSBQh1c6oX9aw3n64/edit?usp=sharing) of a spreadsheet that would work correctly.
 
-Once you've created your sheet, copy its ID from the URL (the long alphanumeric string) and paste it into the value for `SPREADSHEET_ID` in the `keys.json` file.
+Once you've created your sheet, copy its ID from the URL (the long alphanumeric string) and paste it into the value for `SPREADSHEET_ID` in the `config.json` file.
 
 ### Generate a Google Sheets API key
 
-Go to the [credentials page](https://console.developers.google.com/apis/credentials) in the Google Developers API Console and generate an API key. Make sure that the project that the key belongs to has the Google Sheets API enabled. Once you have your key, paste it into the value for `GOOGLE_API_KEY` in the `keys.json` file.
+Go to the [credentials page](https://console.developers.google.com/apis/credentials) in the Google Developers API Console and generate an API key. Make sure that the project that the key belongs to has the Google Sheets API enabled. Once you have your key, paste it into the value for `GOOGLE_API_KEY` in the `config.json` file.
 
 After this last step, you should be all set up to send some emails!
 
