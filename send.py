@@ -1,5 +1,5 @@
+import argparse
 import boto3
-import sys
 
 from src import *
 
@@ -39,8 +39,12 @@ def send_email(client, email, member):
 
     return client.send_email(Source = source, Destination = destination, Message = message)
 
+parser = argparse.ArgumentParser(description = "Send some emails. With style.")
+parser.add_argument("email", type = str, help = "The name of the email file that you want to send out.")
+args = parser.parse_args()
+
 # Remove .email extension if it's here in case it was added mistakenly
-email_name = sys.argv[1].replace(".email", "")
+email_name = args.email.replace(".email", "")
 
 client = boto3.client(service_name = "ses", region_name = "us-east-1")
 email = load_email(email_name)
