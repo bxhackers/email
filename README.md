@@ -2,7 +2,6 @@
 
 This is what we use to send emails out to everyone in Bronx Science Hackers. It has only been tested on macOS, but in theory this should work in Linux environments as well.
 
-
 ## Setup
 
 ### Install Python dependencies
@@ -39,11 +38,11 @@ After this last step, you should be all set up to send some emails!
 
 ## Usage
 
-1. **Write the email that you want to send**
+### Write the email that you want to send
 
 Write out your email, following the format of the `.email` files that already exist. Once you're done writing, place your new file in the `emails` folder. Keep in mind that the line breaks in your file matter, as these determine where your paragraphs will start and end.
 
-2. **Send your email out to everyone**
+### Send your email out to everyone
 
 By now, with everything is in place, you should be able to send your email from the command line. Perform the following command where `filename` is the name of the file that you just created.
 
