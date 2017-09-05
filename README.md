@@ -17,7 +17,7 @@ $ pip install -r requirements.txt
 
 After that command finishes, you'll need to verify that your computer authenticated with AWS. We use `boto3` for AWS requests, so you should refer to the [Boto 3 documentation](https://boto3.readthedocs.io/en/latest/guide/quickstart.html#configuration) to figure out how to get yourself set up. You should also make sure that your credentials are configured to work with [Amazon SES](https://aws.amazon.com/ses/).
 
-### Set up a Google Spreadsheet
+### Set up your Google Sheet
 
 We read names and email addresses from a Google Sheet, so you'll need to set one up that we'll be able to use. It should look something like this:
 
