@@ -21,7 +21,9 @@ def render_template(email, member):
     for line in email.text.split("\n"):
         text += "<p>%s</p>" % line
 
-    html = html.replace("{{name}}", member.first).replace("{{content}}", text)
+    # Replace variables with personalized values for each member
+    text = text.replace("{{first}}", member.first).replace("{{last}}", member.last).replace("{{email}}", member.email)
+    html = html.replace("{{content}}", text)
 
     f = open("./template/template.css", "r")
     css = f.read()
