@@ -19,6 +19,8 @@ class Email:
 
         text = ""
 
+        # Start at 2 to remove the subject line and the newline
+        # End at -1 to remove the last newline in the file
         for line in lines[2:-1]:
             text += "%s\n" % line
 
