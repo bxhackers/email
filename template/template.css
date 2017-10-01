@@ -51,7 +51,7 @@ body {
 
 .person {
     display: inline-block;
-    width: calc(100% / 3 - 3px);
+    width: calc(100% / 3 - 4px);
 }
 
 .person h2, .person h3, .person h4 {
