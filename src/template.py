@@ -47,7 +47,7 @@ def render_template(email, member=None):
 
     return Pynliner().from_string(html).with_cssString(css).run()
 
-def render_template_text(email, member = None):
+def render_template_text(email, member=None):
     """Renders an email in plaintext for a club member, using the contents of
     the email.
 

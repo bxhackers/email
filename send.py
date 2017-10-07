@@ -92,7 +92,12 @@ people = "person" if len(members) == 1 else "people"
 
 # Make sure that the user is sure of what they're doing
 print("You are about to send \"%s\" to %d %s." % (email.subject, len(members), people))
-response = input("Do you want to continue? [Y/n] ")
+
+try:
+    response = input("Do you want to continue? [Y/n] ")
+except KeyboardInterrupt:
+    print("\nAbort.")
+    sys.exit(0)
 
 # Accept empty string, Y, and y as confirmation, otherwise do not send emails
 if response not in ["", "Y", "y"]:
