@@ -1,3 +1,5 @@
+import re
+
 from pynliner import Pynliner
 
 def contains_variables(email):
@@ -61,6 +63,12 @@ def render_template_text(email, member = None):
 
     # Add extra newlines in plaintext emails
     text = text.replace("\n", "\n\n")
+
+    # Replace anchor tags with plaintext links
+    for anchor in re.finditer("<a href=\"([^\"]+)\">([^<]+)<\/a>", text):
+        url = anchor.group(1)
+        content = anchor.group(2)
+        text = text.replace("<a href=\"%s\">%s</a>" % (url, content), "%s (%s)" % (content, url))
 
     if member is not None:
         # Replace variables with personalized values for each member
