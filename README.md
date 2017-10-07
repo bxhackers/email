@@ -49,7 +49,9 @@ While writing your emails, you can use `{{first}}` to indicate that each member'
 By now, with everything is in place, you should be able to send your email from the command line. Perform the following command where `filename` is the name of the file that you just created.
 
 ```bash
-$ python send.py filename
+$ python send.py example
+You are about to send "Welcome to atomhacks/email!" to 3 people.
+Do you want to continue? [Y/n]
 Email to example@email.com was sent successfully!
 Email to example2@email.com was sent successfully!
 Email to example3@email.com was sent successfully!
