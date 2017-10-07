@@ -1,0 +1,5 @@
+Subject: Welcome to atomhacks/email!
+
+Hey {{first}},
+Thanks for trying out atomhacks/email. We hope you like it! If you have any questions or suggestions, feel free to <a href="https://github.com/atomhacks/email/issues/new">file an issue</a> on our GitHub repository.
+- Jack
