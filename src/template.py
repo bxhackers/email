@@ -14,7 +14,7 @@ def contains_variables(email):
 
     return "{{first}}" in email.text or "{{last}}" in email.text or "{{email}}" in email.text
 
-def render_template(email, member = None):
+def render_template(email, member=None):
     """Renders an email for a club member, using the html/css files from the
     template folder.
 

@@ -5,7 +5,7 @@ import sys
 
 from src import *
 
-def send_email(client, config, email, member = None, recipients = None):
+def send_email(client, config, email, member=None, recipients=None):
     """Sends an email to someone. Either member or recipients must not be None.
 
     Args:
@@ -60,18 +60,17 @@ def send_email(client, config, email, member = None, recipients = None):
         }
     }
 
-    return client.send_email(Source = source, Destination = destination, Message = message)
+    return client.send_email(Source=source, Destination=destination, Message=message)
 
 parser = argparse.ArgumentParser(description="Send emails with style.")
 parser.add_argument("email", type=str, help="name of the email file to send")
-parser.add_argument("-s", "--sheet", default=0, type=int, help="spreadsheet index to fetch emails from")
 parser.add_argument("-r", "--random", action="store_true", help="randomize the order that emails are sent in")
 args = parser.parse_args()
 
 # Remove .email extension if it's here in case it was added mistakenly
 email_name = args.email.replace(".email", "")
 
-client = boto3.client(service_name = "ses", region_name = "us-east-1")
+client = boto3.client(service_name="ses", region_name="us-east-1")
 email = load_email(email_name)
 
 # Exit if there was an error loading the email model
@@ -117,7 +116,7 @@ else:
     for member in members:
         recipients.append(str(member))
 
-    result = send_email(client, config, email, recipients = recipients)
+    result = send_email(client, config, email, recipients=recipients)
     status_code = result["ResponseMetadata"]["HTTPStatusCode"]
 
     if status_code == 200:
