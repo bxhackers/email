@@ -1,5 +1,6 @@
 import argparse
 import boto3
+import sys
 
 from src import *
 
@@ -57,8 +58,8 @@ def send_email(client, config, email, member = None, recipients = None):
 
     return client.send_email(Source = source, Destination = destination, Message = message)
 
-parser = argparse.ArgumentParser(description = "Send some emails. With style.")
-parser.add_argument("email", type = str, help = "The name of the email file that you want to send out.")
+parser = argparse.ArgumentParser(description = "Send emails with style.")
+parser.add_argument("email", type = str, help = "The name of the email that you want to send out.")
 args = parser.parse_args()
 
 # Remove .email extension if it's here in case it was added mistakenly
@@ -68,8 +69,22 @@ client = boto3.client(service_name = "ses", region_name = "us-east-1")
 email = load_email(email_name)
 config = load_config()
 
+members = request_members(config)
+
+# Use "person" if sending emails to one person, otherwise use "people"
+people = "person" if len(members) == 1 else "people"
+
+# Make sure that the user is sure of what they're doing
+print("You are about to send \"%s\" to %d %s." % (email.subject, len(members), people))
+response = input("Do you want to continue? [Y/n] ")
+
+# Accept empty string, Y, and y as confirmation, otherwise do not send emails
+if response not in ["", "Y", "y"]:
+    print("Abort.")
+    sys.exit(0)
+
 if contains_variables(email):
-    for member in request_members(config):
+    for member in members:
         result = send_email(client, config, email, member)
 
         status_code = result["ResponseMetadata"]["HTTPStatusCode"]
@@ -82,7 +97,7 @@ if contains_variables(email):
 else:
     recipients = []
 
-    for member in request_members(config):
+    for member in members:
         recipients.append(str(member))
 
     result = send_email(client, config, email, recipients = recipients)
