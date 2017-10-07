@@ -78,6 +78,10 @@ if email == None:
 config = load_config()
 members = request_members(config)
 
+# Exit if there was an error loading members
+if members == None:
+    sys.exit(0)
+
 # Use "person" if sending emails to one person, otherwise use "people"
 people = "person" if len(members) == 1 else "people"
 

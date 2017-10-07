@@ -47,13 +47,30 @@ def request_members(config):
     range_ = "A1:C1000"
 
     api_key = config.keys.google_api_key
+
+    if api_key == None or api_key == "":
+        print("Your API key was entered incorrectly in config.json. You can generate a key at https://console.developers.google.com/apis/credentials")
+        return None
+
     spreadsheet_id = config.keys.spreadsheet_id
+
+    if spreadsheet_id == None or spreadsheet_id == "":
+        print("Your spreadsheet id was entered incorrectly in config.json. You can find your spreadsheet id in your Google Sheet's URL, e.g. https://docs.google.com/spreadsheets/u/1/d/{SPREADSHEET_ID_IS_HERE}/edit")
+        return None
+
     values = (spreadsheet_id, range_, api_key)
 
     r = requests.get("https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s?key=%s" % values)
-    members_json = r.json()["values"]
+    json = r.json()
+    members_json = None
 
-    # Remove the first row, since this just has column names
+    if "values" in json:
+        members_json = json["values"]
+    else:
+        print("There was an issue retrieving data from your Google Sheet. Make sure that your spreadsheet_id is correct in config.json.")
+        return None
+
+    # Remove the first row since this just has column names
     members_json.pop(0)
 
     members = []
