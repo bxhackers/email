@@ -70,8 +70,12 @@ email_name = args.email.replace(".email", "")
 
 client = boto3.client(service_name = "ses", region_name = "us-east-1")
 email = load_email(email_name)
-config = load_config()
 
+# Exit if there was an error loading the email model
+if email == None:
+    sys.exit(0)
+
+config = load_config()
 members = request_members(config)
 
 # Use "person" if sending emails to one person, otherwise use "people"

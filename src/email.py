@@ -36,7 +36,12 @@ def load_email(name):
         The email model that was generated from this file.
     """
 
-    f = open("./emails/%s.email" % name)
+    try:
+        f = open("./emails/%s.email" % name)
+    except FileNotFoundError:
+        print("\"%s\" could not be found. Make sure that %s.email exists in the emails folder." % (name, name))
+        return None
+
     contents = f.read()
     f.close()
 
