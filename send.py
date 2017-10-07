@@ -1,5 +1,6 @@
 import argparse
 import boto3
+import random
 import sys
 
 from src import *
@@ -61,8 +62,10 @@ def send_email(client, config, email, member = None, recipients = None):
 
     return client.send_email(Source = source, Destination = destination, Message = message)
 
-parser = argparse.ArgumentParser(description = "Send emails with style.")
-parser.add_argument("email", type = str, help = "The name of the email that you want to send out.")
+parser = argparse.ArgumentParser(description="Send emails with style.")
+parser.add_argument("email", type=str, help="name of the email file to send")
+parser.add_argument("-s", "--sheet", default=0, type=int, help="spreadsheet index to fetch emails from")
+parser.add_argument("-r", "--random", action="store_true", help="randomize the order that emails are sent in")
 args = parser.parse_args()
 
 # Remove .email extension if it's here in case it was added mistakenly
@@ -77,6 +80,9 @@ if email == None:
 
 config = load_config()
 members = request_members(config)
+
+if args.random:
+    random.shuffle(members)
 
 # Exit if there was an error loading members
 if members == None:
