@@ -44,3 +44,30 @@ def render_template(email, member = None):
     f.close()
 
     return Pynliner().from_string(html).with_cssString(css).run()
+
+def render_template_text(email, member = None):
+    """Renders an email in plaintext for a club member, using the contents of
+    the email.
+
+    Args:
+        email: The model of the email that is being sent.
+        member: The member that this email should be sent to.
+
+    Returns:
+        The ready-to-send plaintext email that was generated.
+    """
+
+    text = email.text
+
+    # Add extra newlines in plaintext emails
+    text = text.replace("\n", "\n\n")
+
+    if member is not None:
+        # Replace variables with personalized values for each member
+        text = text.replace("{{first}}", member.first).replace("{{last}}", member.last).replace("{{email}}", member.email)
+
+    if "<br>" in text or "<br/>" in text or "<br />" in text:
+        # Replace HTML newlines with plaintext newlines
+        text = text.replace("<br>", "\n").replace("<br/>", "\n").replace("<br />", "\n")
+
+    return text

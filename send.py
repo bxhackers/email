@@ -52,6 +52,9 @@ def send_email(client, config, email, member = None, recipients = None):
         "Body": {
             "Html": {
                 "Data": render_template(email, member)
+            },
+            "Text": {
+                "Data": render_template_text(email, member)
             }
         }
     }
