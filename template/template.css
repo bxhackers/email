@@ -45,6 +45,17 @@ body {
     margin-bottom: 16px;
 }
 
+#content a.button {
+    background: #007161;
+    border-radius: 4px;
+    color: #fff;
+    display: block;
+    margin: 24px auto;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
 #footer {
     margin: 24px 16px 8px;
 }
