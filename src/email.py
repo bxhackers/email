@@ -15,7 +15,7 @@ class Email:
         """
 
         lines = contents.split("\n")
-        self.subject = lines[0].split(": ")[1]
+        self.subject = lines[0].split(": ", 1)[1]
 
         text = ""
 
